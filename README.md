@@ -4,6 +4,8 @@ This repository contains bash scripts for exercises accompanying the book [**Red
 
 <a href="https://link.springer.com/book/9798868822254"><img src="979-8-8688-2225-4.webp" alt="Red Hat RHCSA 10 Study Companion — Getting Ready for the EX200 Exam (ISBN 979-8-8688-2225-4)" width="320"></a>
 
+Answers are also available on GitHub Pages for easy browsing: https://andreyamarkelov.github.io/adminbook/
+
 ## Structure
 
 The exercises are organized by chapter, with each chapter in its own subdirectory:
