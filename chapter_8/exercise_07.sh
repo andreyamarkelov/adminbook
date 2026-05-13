@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
 # @requires: none
-# @safe: no
+# @safe: yes
 set -euo pipefail
 
 # Exercise 7: Generate a new key pair. Use a strong passphrase for security. 

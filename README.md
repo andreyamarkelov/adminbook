@@ -28,7 +28,7 @@ Each script includes metadata in its header:
 ```
 
 - **`instructional`** — prints the commands to run manually (for example interactive `fdisk` / `parted` walkthroughs). These scripts do not change the system.
-- **`executable`** — runs commands directly. `@safe: no` means the script performs mutating actions (creates users, mounts disks, changes firewall rules, etc.). Read-only commands such as `man`, `ps`, `dnf list`, or pipelines over `/etc/passwd` are marked `@safe: yes`.
+- **`executable`** — runs commands directly. `@safe: no` means the script needs root or changes system-wide configuration. User-only actions (keys in `~/.ssh`, your crontab, directories in your home directory, `flatpak --user`, etc.) are marked `@safe: yes`.
 
 ### Running a script
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
 # @requires: none
-# @safe: no
+# @safe: yes
 set -euo pipefail
 
 # Exercise 5: Edit your user's crontab file to run the command 

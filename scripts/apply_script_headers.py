@@ -174,6 +174,18 @@ def needs_root(content: str) -> bool:
     return any(line_needs_root(line) for line in executable_lines(content))
 
 
+def is_safe(content: str) -> bool:
+    """Safe when read-only or mutations stay in the current user's scope."""
+    if INSTRUCTIONAL_MARKER in content:
+        return True
+    for line in executable_lines(content):
+        if line_is_read_only(line):
+            continue
+        if line_needs_root(line):
+            return False
+    return True
+
+
 def infer_metadata(rel_path: str, content: str) -> tuple[str, str, str]:
     instructional = INSTRUCTIONAL_MARKER in content
     script_type = "instructional" if instructional else "executable"
@@ -188,10 +200,7 @@ def infer_metadata(rel_path: str, content: str) -> tuple[str, str, str]:
         if "/dev/sdb" in content:
             requires.append("/dev/sdb")
 
-    if instructional or not is_mutating(content):
-        safe = "yes"
-    else:
-        safe = "no"
+    safe = "yes" if is_safe(content) else "no"
 
     requires_value = ", ".join(dict.fromkeys(requires)) if requires else "none"
     return script_type, requires_value, safe

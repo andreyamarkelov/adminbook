@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
 # @requires: none
-# @safe: no
+# @safe: yes
 set -euo pipefail
 
 # Exercise 8: You need to enable key-based authentication for the user root on the local server 127.0.0.1. 
