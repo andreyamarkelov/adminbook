@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 13: Add the http service to the default zone's runtime configuration. 
 # Verify it is listed. Then, reload the firewall using firewall-cmd --reload 
 # and verify that the http service is now gone (because it was not permanent).

@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 5: Edit your user's crontab file to run the command 
 # /bin/echo "Cron!" > ~/cron.log every day at 9:00.
 #

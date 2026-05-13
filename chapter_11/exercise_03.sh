@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 3: The company wants to run a secondary HTTP server on port 8988. 
 # Write the command to permanently label TCP port 8988 as a valid http_port_t port.
 #

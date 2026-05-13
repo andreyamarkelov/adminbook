@@ -1,4 +1,8 @@
 #!/bin/bash
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Extra Exercise 3: Write a script that monitors a given log file and
 # counts the number of ERROR, WARNING, and INFO lines.
 # Accept the log file path as an argument. Use grep -c for counting.

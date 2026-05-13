@@ -1,4 +1,8 @@
 #!/bin/bash
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Extra Exercise 1: Write a script that takes a filename as an argument
 # and displays the number of lines, words, and characters in the file.
 # If no argument is provided, print a usage message.

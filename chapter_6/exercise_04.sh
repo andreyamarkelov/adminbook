@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 4: Use the lsblk --fs or blkid commands to list all file systems 
 # on your system and their corresponding UUIDs.
 #

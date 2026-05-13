@@ -1,0 +1,102 @@
+book:
+  title: Adminbook Exercise Answers
+  subtitle: "Red Hat RHCSA 10 Study Companion: Getting Ready for the EX200 Exam"
+  author: Andrey Markelov
+  published: May 2026
+  isbn_url: https://link.springer.com/book/9798868822254
+  cover_image: 979-8-8688-2225-4.webp
+  repo_url: https://github.com/andreyamarkelov/adminbook
+  pages_url: https://andreyamarkelov.github.io/adminbook/
+
+chapters:
+  - id: chapter_2
+    title: "Chapter 2: Documentation and Basic Commands"
+    summary: "5 exercises + 3 extra"
+    topics:
+      - Man pages, info pages
+      - Bash aliases
+      - Find command and pipes
+      - Vim tutorial
+
+  - id: chapter_3
+    title: "Chapter 3: Bash Scripting"
+    summary: "5 exercises + 3 extra"
+    topics:
+      - Argument processing
+      - File and directory operations
+      - Conditional statements and loops
+      - Test operators
+
+  - id: chapter_4
+    title: "Chapter 4: User and Group Management"
+    summary: "6 exercises"
+    topics:
+      - Creating users and groups
+      - User modification and deletion
+      - Password aging policies
+      - Sudo configuration
+
+  - id: chapter_5
+    title: "Chapter 5: Disk Management and LVM"
+    summary: "5 exercises"
+    topics:
+      - Disk partitioning (fdisk)
+      - Physical volumes and volume groups
+      - Logical volumes
+      - LVM cleanup
+
+  - id: chapter_6
+    title: "Chapter 6: Filesystems and Storage"
+    summary: "6 exercises"
+    topics:
+      - GPT partitioning (parted)
+      - XFS filesystem
+      - fstab configuration
+      - SGID permissions
+      - Swap files
+
+  - id: chapter_7
+    title: "Chapter 7: System Management"
+    summary: "6 exercises"
+    topics:
+      - Systemd targets
+      - Journal logs
+      - Process management (ps, nice, renice)
+      - TuneD profiles
+
+  - id: chapter_8
+    title: "Chapter 8: Task Scheduling and Remote Access"
+    summary: "9 exercises"
+    topics:
+      - Background jobs
+      - at command
+      - Cron jobs
+      - Time management (timedatectl)
+      - SSH key generation and configuration
+
+  - id: chapter_9
+    title: "Chapter 9: Package Management"
+    summary: "10 exercises"
+    topics:
+      - DNF operations
+      - RPM queries
+      - Repository management
+      - Flatpak applications
+
+  - id: chapter_10
+    title: "Chapter 10: Networking"
+    summary: "14 exercises"
+    topics:
+      - Network interface configuration
+      - NetworkManager (nmcli)
+      - Static and DHCP configurations
+      - Hostname and DNS management
+      - Firewall configuration (firewall-cmd)
+
+  - id: chapter_11
+    title: "Chapter 11: SELinux"
+    summary: "4 exercises"
+    topics:
+      - SELinux contexts
+      - File and port labeling
+      - SELinux booleans

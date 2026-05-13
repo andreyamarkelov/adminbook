@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 11: Modify your active connection profile to use the static DNS servers 8.8.8.8 and 8.8.4.4
 #
 # Task: Configure custom DNS servers for a network connection.

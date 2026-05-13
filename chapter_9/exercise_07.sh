@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 7: Use the dnf config-manager utility to enable the 
 # codeready-builder-for-rhel-10-x86_64-rpms repository.
 #

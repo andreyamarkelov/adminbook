@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 6: Create a 1 Gb file at /tmp/swapfile using dd. 
 # Use the mkswap command to format the file as a swap area. 
 # Activate the swap file with the swapon command and verify the new total swap size with free -h.

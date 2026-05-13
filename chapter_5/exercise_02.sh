@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# @type: instructional
+# @requires: /dev/sdb
+# @safe: yes
 # Exercise 2: Convert partitions to LVM type if you used any other. From remaining space create another one.
 #
 # Task: Change partition types to Linux LVM (type 8e) and create additional partition.

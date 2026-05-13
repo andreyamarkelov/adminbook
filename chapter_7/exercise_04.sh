@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Exercise 4: Use the ps command to identify the top 3 processes consuming the most CPU and memory.
 #
 # Task: List processes sorted by CPU and memory usage.

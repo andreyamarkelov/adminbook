@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 12: Modify the same connection profile to set ipv4.ignore-auto-dns to yes. 
 # Reactivate the connection and then inspect the /etc/resolv.conf file 
 # to ensure only your manually set DNS servers are present.

@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Extra Exercise 1: Use the find command to locate all files in /var/log that were 
 # modified in the last 24 hours. Sort the results by modification time (newest first).
 #

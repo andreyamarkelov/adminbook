@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 9: Which two lines would you modify in the main OpenSSH server configuration file 
 # (/etc/ssh/sshd_config) to disable password authentication and prevent the root user 
 # from logging in directly?

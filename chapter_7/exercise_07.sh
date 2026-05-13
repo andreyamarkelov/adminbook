@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 7: Use tuned-adm active to determine which performance profile is currently active on your system. 
 # Switch the active TuneD profile to throughput-performance using the tuned-adm profile command.
 #

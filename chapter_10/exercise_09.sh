@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 9: Change your system's persistent hostname to server15.test.local.
 #
 # Task: Set a new system hostname.

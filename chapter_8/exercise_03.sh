@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 3: Schedule a command using at to execute 5 minutes from now. 
 # The command should redirect the output of date to a file named ~/test_output.txt.
 #

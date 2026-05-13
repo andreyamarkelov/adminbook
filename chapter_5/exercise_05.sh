@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root, /dev/sdb
+# @safe: no
+set -euo pipefail
 # Exercise 5: Delete all LVs and VG.
 #
 # Task: Clean up LVM configuration by removing logical volumes, volume groups, and physical volumes.

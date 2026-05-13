@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Extra Exercise 3: Use the head and tail commands together to extract lines 10-20
 # from /etc/passwd. Then use sed to achieve the same result.
 #

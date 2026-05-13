@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Exercise 1: Write the two commands necessary to check the SELinux context (label) 
 # for both the running sshd process and the /etc/ssh/sshd_config file.
 #

@@ -1,5 +1,7 @@
 #!/bin/bash
-
+# @type: instructional
+# @requires: /dev/sdb
+# @safe: yes
 # Exercise 3: Use parted command to create a new partition with LVM type using 50% of the available space.
 # Add partition to existing LVM group and extend / file system.
 #

@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root
+# @safe: no
+set -euo pipefail
 # Exercise 4: Delete the devuser2 account, ensuring the home directory is also deleted.
 # Verify that the entry is no longer in /etc/passwd.
 #

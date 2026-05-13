@@ -6,12 +6,46 @@ This repository contains bash scripts for exercises accompanying the book [**Red
 
 Answers are also available on GitHub Pages for easy browsing: https://andreyamarkelov.github.io/adminbook/
 
+## Before you run anything
+
+**Use a disposable lab VM only.** Many scripts create users, change `/etc/fstab`, reconfigure networking, modify firewalld, or adjust SELinux. Do not run them on a production system or your daily machine.
+
+| Requirement | Details |
+|-------------|---------|
+| **Target OS** | RHEL 10 (or a compatible RHCSA practice VM) |
+| **Privileges** | Many scripts use `sudo` or require root |
+| **Extra disk** | Storage chapters assume an unpartitioned disk at `/dev/sdb` |
+| **Snapshots** | Take a VM snapshot before each chapter when possible |
+
+### Script types
+
+Each script includes metadata in its header:
+
+```bash
+# @type: executable | instructional
+# @requires: none | root | /dev/sdb | root, /dev/sdb
+# @safe: yes | no
+```
+
+- **`instructional`** — prints the commands to run manually (for example interactive `fdisk` / `parted` walkthroughs). These scripts do not change the system.
+- **`executable`** — runs commands directly. Treat `@safe: no` scripts as destructive in a lab context.
+
+### Running a script
+
+```bash
+chmod +x chapter_N/exercise_MM.sh
+./chapter_N/exercise_MM.sh
+```
+
+Some chapter 3 scripts require arguments; see the usage message in each file. Chapter 2 exercise 5 launches interactive `vimtutor`. Chapter 4 exercise 6 opens `visudo` for manual editing.
+
 ## Structure
 
-The exercises are organized by chapter, with each chapter in its own subdirectory:
+Chapter titles and topics are defined in [`chapters.yaml`](chapters.yaml) (single source of truth for the GitHub Pages site). Exercises are organized by chapter:
 
 ```
 adminbook/
+├── chapters.yaml   # Chapter metadata
 ├── chapter_2/    (5 exercises + 3 extra)  - Basic Linux commands and documentation
 ├── chapter_3/    (5 exercises + 3 extra)  - Bash scripting fundamentals
 ├── chapter_4/    (6 exercises)  - User and group management
@@ -89,6 +123,10 @@ adminbook/
 - SELinux contexts
 - File and port labeling
 - SELinux booleans
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for script conventions, local validation, and pull request guidelines.
 
 ## Source
 

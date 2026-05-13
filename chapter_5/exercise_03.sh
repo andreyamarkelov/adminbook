@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: root, /dev/sdb
+# @safe: no
+set -euo pipefail
 # Exercise 3: Using the LVM partitions you created in a previous exercise, 
 # create physical volumes and include into vg01 group.
 #

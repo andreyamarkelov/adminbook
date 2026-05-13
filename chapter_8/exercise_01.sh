@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Exercise 1: Execute the sleep 1200 command in the background. 
 # Immediately verify it is running, and then note its job number.
 #

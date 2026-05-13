@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Exercise 2: Start a ping 127.0.0.1 process in the foreground. 
 # Stop it using the appropriate key sequence, and then send the stopped process 
 # to the background so it resumes running.

@@ -1,5 +1,8 @@
 #!/bin/bash
-
+# @type: executable
+# @requires: none
+# @safe: yes
+set -euo pipefail
 # Exercise 4: Create a script that performs a numeric countdown from a given starting number to 1.
 # If no argument is provided or the argument is not a positive integer, print an error message and exit.
 #
