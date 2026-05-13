@@ -78,7 +78,7 @@ MUTATING_PATTERNS = (
     re.compile(r"\blvextend\b"),
     re.compile(r"\bparted\b"),
     re.compile(r"\bfdisk\b"),
-    re.compile(r"\bcrontab\b(?!.*\s-l\b)"),
+    re.compile(r"\bcrontab\b.*\s-u\s"),
     re.compile(r"^\s*at\s+"),
     re.compile(r"\bhostnamectl\s+set\b"),
     re.compile(r"\btimedatectl\s+set-"),
@@ -98,6 +98,7 @@ USER_SPACE_MUTATING_PATTERNS = (
     re.compile(r"\brenice\b"),
     re.compile(r"\bfallocate\b"),
     re.compile(r"\bssh-copy-id\b"),
+    re.compile(r"\bcrontab\b(?!.*\s-l\b)"),
 )
 
 USER_SCOPE_RE = re.compile(r"(?:flatpak\b[^\n]*\s--user\b|ssh-copy-id\b)")
