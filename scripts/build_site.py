@@ -173,9 +173,12 @@ def copy_lab_vm_assets() -> None:
 def parse_script_meta(content: str) -> dict[str, str]:
     meta = {"type": "executable", "requires": "none", "safe": "no"}
     for line in content.splitlines():
-        if not line.startswith("# @"):
+        stripped = line.strip()
+        if stripped in ("#!/bin/bash", "set -euo pipefail") or not stripped:
+            continue
+        if not stripped.startswith("# @"):
             break
-        match = re.match(r"# @(\w+):\s*(.+)", line.strip())
+        match = re.match(r"# @(\w+):\s*(.+)", stripped)
         if match:
             meta[match.group(1)] = match.group(2).strip()
     return meta
