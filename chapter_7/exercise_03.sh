@@ -1,6 +1,6 @@
 #!/bin/bash
 # @type: executable
-# @requires: root
+# @requires: none
 # @safe: yes
 set -euo pipefail
 

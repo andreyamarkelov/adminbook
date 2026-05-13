@@ -82,20 +82,34 @@ MUTATING_PATTERNS = (
     re.compile(r"^\s*at\s+"),
     re.compile(r"\bhostnamectl\s+set\b"),
     re.compile(r"\btimedatectl\s+set-"),
+    re.compile(r"\bflatpak\s+install\b"),
+    re.compile(r"\bflatpak\s+remote-add\b"),
+    re.compile(r"\bupdate-crypto-policies\b"),
+)
+
+USER_SPACE_MUTATING_PATTERNS = (
+    re.compile(r"\bmkdir\b"),
     re.compile(r"\bchmod\b"),
     re.compile(r"\bchown\b"),
     re.compile(r"\bchattr\b"),
-    re.compile(r"\bmkdir\b"),
-    re.compile(r"\bfallocate\b"),
+    re.compile(r"\bln\s+-s\b"),
     re.compile(r"\bssh-keygen\b"),
-    re.compile(r"\bssh-copy-id\b"),
-    re.compile(r"\bflatpak\s+install\b"),
-    re.compile(r"\bflatpak\s+remote-add\b"),
     re.compile(r"\bkill\b"),
     re.compile(r"\brenice\b"),
-    re.compile(r"\bln\s+-s\b"),
-    re.compile(r"\bupdate-crypto-policies\b"),
+    re.compile(r"\bfallocate\b"),
+    re.compile(r"\bssh-copy-id\b"),
 )
+
+USER_SCOPE_RE = re.compile(r"(?:flatpak\b[^\n]*\s--user\b|ssh-copy-id\b)")
+
+SYSTEM_PATH_RE = re.compile(
+    r"""(?:^|[\s"'`=])(?:/etc(?:/|\s|$)|/mnt(?:/|\s|$)|/usr(?:/|\s|$)|"""
+    r"""/var(?:/|\s|$)|/opt(?:/|\s|$)|/srv(?:/|\s|$)|/root(?:/|\s|$)|/boot(?:/|\s|$))"""
+)
+
+
+def references_system_path(line: str) -> bool:
+    return bool(SYSTEM_PATH_RE.search(line))
 
 
 def executable_lines(content: str) -> list[str]:
@@ -130,20 +144,25 @@ def line_is_mutating(line: str) -> bool:
         return False
     if any(pattern.search(line) for pattern in MUTATING_PATTERNS):
         return True
+    if any(pattern.search(line) for pattern in USER_SPACE_MUTATING_PATTERNS):
+        return True
     if re.search(r"\bsudo\b", line):
-        # Unknown privileged command; treat as mutating unless read-only.
         return not line_is_read_only(line)
     return False
 
 
 def line_needs_root(line: str) -> bool:
-    if not line.strip():
+    if not line.strip() or line_is_read_only(line):
+        return False
+    if USER_SCOPE_RE.search(line):
         return False
     if re.search(r"\bsudo\b", line):
         return True
-    if line_is_read_only(line):
-        return False
-    return line_is_mutating(line)
+    if any(pattern.search(line) for pattern in MUTATING_PATTERNS):
+        return True
+    if any(pattern.search(line) for pattern in USER_SPACE_MUTATING_PATTERNS):
+        return references_system_path(line)
+    return False
 
 
 def is_mutating(content: str) -> bool:
