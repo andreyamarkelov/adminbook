@@ -12,7 +12,7 @@ Answers are also available on GitHub Pages for easy browsing: https://andreyamar
 
 | Requirement | Details |
 |-------------|---------|
-| **Target OS** | RHEL 10 (or a compatible RHCSA practice VM) |
+| **Target OS** | RHEL 10 (or a compatible RHCSA practice VM) — see [lab VM setup guide](https://andreyamarkelov.github.io/adminbook/lab-vm-setup.html) on GitHub Pages |
 | **Privileges** | Many scripts use `sudo` or require root |
 | **Extra disk** | Storage chapters assume an unpartitioned disk at `/dev/sdb` |
 | **Snapshots** | Take a VM snapshot before each chapter when possible |

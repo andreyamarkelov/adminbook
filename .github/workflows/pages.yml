@@ -7,6 +7,8 @@ on:
     paths:
       - 'chapter_**'
       - 'chapters.yaml'
+      - 'content/**'
+      - 'assets/**'
       - 'scripts/build_site.py'
       - '979-8-8688-2225-4.webp'
       - '.github/workflows/pages.yml'

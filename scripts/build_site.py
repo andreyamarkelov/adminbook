@@ -41,6 +41,14 @@ code.hljs{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-
 .actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem}
 .actions a{font-size:.9rem}
 .site-header{margin-bottom:1.5rem}
+.figure{margin:1.25rem 0;text-align:center}
+.figure img{max-width:100%;height:auto;border:1px solid #ddd;border-radius:.5rem}
+.figure figcaption{margin-top:.5rem;font-size:.9rem;color:#555}
+.guide-section{margin:2rem 0}
+.guide-section pre{background:#111;color:#f4f4f4;padding:1rem;border-radius:.5rem;overflow:auto}
+.guide-section code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.guide-toc{background:#f6f8fa;border:1px solid #e1e4e8;border-radius:.5rem;padding:1rem 1.25rem;margin:1.25rem 0}
+.guide-toc ul{margin:.5rem 0 0;padding-left:1.25rem}
 """
 
 COPY_SCRIPT = """
@@ -64,6 +72,102 @@ hljs.highlightAll();
 def load_config() -> dict:
     with (ROOT / "chapters.yaml").open(encoding="utf-8") as handle:
         return yaml.safe_load(handle)
+
+
+def load_lab_vm_page() -> dict | None:
+    path = ROOT / "content" / "lab-vm-setup.yaml"
+    if not path.exists():
+        return None
+    with path.open(encoding="utf-8") as handle:
+        return yaml.safe_load(handle)
+
+
+def render_inline_markdown(text: str) -> str:
+    escaped = html.escape(text)
+    escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
+    escaped = re.sub(
+        r"\[([^\]]+)\]\(([^)]+)\)",
+        lambda match: f'<a href="{html.escape(match.group(2), quote=True)}">{html.escape(match.group(1))}</a>',
+        escaped,
+    )
+    return escaped
+
+
+def render_markdown_body(body: str) -> str:
+    chunks: list[str] = []
+    pattern = re.compile(r"```([a-zA-Z0-9_-]*)\n(.*?)```", re.DOTALL)
+    pos = 0
+    for match in pattern.finditer(body):
+        before = body[pos : match.start()].strip()
+        if before:
+            chunks.append(render_markdown_paragraphs(before))
+        language = match.group(1) or "bash"
+        code = html.escape(match.group(2).strip("\n"))
+        chunks.append(
+            f'<pre><code class="language-{html.escape(language)}">{code}</code></pre>'
+        )
+        pos = match.end()
+    tail = body[pos:].strip()
+    if tail:
+        chunks.append(render_markdown_paragraphs(tail))
+    return "\n".join(chunks)
+
+
+def render_markdown_paragraphs(text: str) -> str:
+    parts: list[str] = []
+    for block in re.split(r"\n\s*\n", text.strip()):
+        block = block.strip()
+        if not block:
+            continue
+        image = re.fullmatch(r"!\[([^\]]*)\]\(([^)]+)\)", block)
+        if image:
+            alt = html.escape(image.group(1))
+            src = html.escape(image.group(2), quote=True)
+            parts.append(
+                f'<figure class="figure"><img src="./{src}" alt="{alt}">'
+                f"<figcaption>{alt}</figcaption></figure>"
+            )
+            continue
+        lines = [line.strip() for line in block.splitlines() if line.strip()]
+        if lines and all(line.startswith("- ") for line in lines):
+            items = "".join(
+                f"<li>{render_inline_markdown(line[2:])}</li>" for line in lines
+            )
+            parts.append(f"<ul>{items}</ul>")
+            continue
+        parts.append(f"<p>{render_inline_markdown(block.replace(chr(10), ' '))}</p>")
+    return "\n".join(parts)
+
+
+def render_guide_page(page: dict, book: dict) -> str:
+    toc_items = []
+    sections = []
+    for section in page["sections"]:
+        anchor = section["id"]
+        heading = html.escape(section["heading"])
+        toc_items.append(f'<li><a href="#{anchor}">{heading}</a></li>')
+        body_html = render_markdown_body(section["body"])
+        sections.append(
+            f'<section class="guide-section" id="{anchor}">'
+            f"<h2>{heading}</h2>{body_html}</section>"
+        )
+
+    return (
+        '<nav class="guide-toc"><h2>On this page</h2><ul>'
+        + "".join(toc_items)
+        + "</ul></nav><hr>"
+        + "".join(sections)
+    )
+
+
+def copy_lab_vm_assets() -> None:
+    src_dir = ROOT / "assets" / "lab-vm"
+    if not src_dir.exists():
+        return
+    dest_dir = SITE_DIR / "assets" / "lab-vm"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    for image in src_dir.glob("*.png"):
+        shutil.copy2(image, dest_dir / image.name)
 
 
 def parse_script_meta(content: str) -> dict[str, str]:
@@ -187,6 +291,25 @@ def build_site() -> None:
     if cover_src.exists():
         shutil.copy2(cover_src, SITE_DIR / book["cover_image"])
 
+    copy_lab_vm_assets()
+
+    lab_vm_page = load_lab_vm_page()
+    lab_vm_link = ""
+    if lab_vm_page:
+        guide_body = render_guide_page(lab_vm_page, book)
+        guide_html = page_shell(
+            title=lab_vm_page["title"],
+            description=lab_vm_page["description"],
+            book=book,
+            body=guide_body,
+        )
+        guide_filename = lab_vm_page.get("page", "lab-vm-setup.html")
+        (SITE_DIR / guide_filename).write_text(guide_html, encoding="utf-8")
+        lab_vm_link = (
+            f'<li><a href="./{html.escape(guide_filename)}">{html.escape(lab_vm_page["title"])}</a> '
+            f'<span class="muted">(virtual machine setup)</span></li>'
+        )
+
     chapter_links: list[str] = []
     for chapter in chapters:
         chapter_id = chapter["id"]
@@ -233,6 +356,10 @@ def build_site() -> None:
 </a></p>
 <p class="muted">Browse chapter answers below. Script metadata (<code>@type</code>, <code>@requires</code>, <code>@safe</code>) is shown on each exercise page.</p>
 <p><strong>Warning:</strong> Many scripts change system configuration. Use a disposable lab VM only.</p>
+<h2>Getting started</h2>
+<ul>
+{lab_vm_link}
+</ul>
 <h2>Chapters</h2>
 <ul>
 {"".join(chapter_links)}
