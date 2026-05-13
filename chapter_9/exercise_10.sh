@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
+
 # Exercise 10: Install Gimp from Flathub.
 #
 # Task: Install the GIMP image editor using flatpak.

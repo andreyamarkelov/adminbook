@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: root
-# @safe: no
+# @requires: none
+# @safe: yes
 set -euo pipefail
+
 # Extra Exercise 2: Create a command pipeline that reads /etc/passwd, extracts 
 # all unique shells (field 7), sorts them, and displays how many users use each shell.
 #

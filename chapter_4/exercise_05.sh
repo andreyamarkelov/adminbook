@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 5: For devuser1, set the minimum number of days between password changes to 8 and 
 # the maximum number of days to 40. Set the warning period before devuser1's password expires 
 # to 14 days. Force devuser1 to change their password on the next login. 

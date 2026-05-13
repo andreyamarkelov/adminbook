@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 3: Lock the devuser2 account. Verify the change by checking entry in /etc/shadow.
 #
 # Task: Lock a user account and verify the lock status in the shadow file.

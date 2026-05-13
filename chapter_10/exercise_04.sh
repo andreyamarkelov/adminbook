@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: root
-# @safe: no
+# @requires: none
+# @safe: yes
 set -euo pipefail
+
 # Exercise 4: Use nmcli to display all properties for your primary active connection. 
 # Note the ipv4.method value.
 #

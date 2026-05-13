@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 1: Use systemctl to find the default systemd target on your system. 
 # Use systemctl to temporarily switch your system to multi-user.target.
 #

@@ -2,6 +2,7 @@
 # @type: instructional
 # @requires: /dev/sdb
 # @safe: yes
+
 # Exercise 1: Assuming you have a new, unpartitioned 20Gb disk named /dev/sdb. 
 # Use fdisk /dev/sdb to enter the interactive mode. Create a new DOS (MBR) partition table for the disk. 
 # Create one primary partition of 2 Gb and one extended partition. 

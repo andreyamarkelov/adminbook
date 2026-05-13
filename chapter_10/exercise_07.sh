@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
 # @requires: root
-# @safe: no
+# @safe: yes
 set -euo pipefail
+
 # Exercise 7: Bring the static1 connection up. 
 # Use ip a and ip route to verify that the static IP and new default gateway are active.
 #

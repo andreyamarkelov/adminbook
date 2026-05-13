@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 4: From the vg01 volume group, create a new logical volume named lv01 with a size of 3 GiB.
 # Create a second logical volume named lv02 that uses 40% of the remaining free space in the volume group.
 #

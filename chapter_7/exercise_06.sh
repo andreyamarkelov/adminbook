@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
+
 # Exercise 6: Use renice to change the niceness of a running process, 
 # and then confirm the change with ps.
 #

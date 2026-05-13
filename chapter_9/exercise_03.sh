@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 3: Remove the zsh package and any dependencies that are no longer needed, 
 # using a single DNF command.
 #

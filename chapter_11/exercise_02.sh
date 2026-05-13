@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 2: You have created a new directory, /srv/www/, which needs to be served by Apache. 
 # Write the two commands required to permanently set the context for this directory 
 # and all its contents to httpd_sys_content_t.

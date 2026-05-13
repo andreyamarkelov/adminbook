@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 6: Create a new file /etc/sudoers.d/devs using visudo with option -f. 
 # In this new file, add a rule that allows the user devuser2 to run all commands as root 
 # without needing a password. Add a rule that allows the group devusers to run all commands 

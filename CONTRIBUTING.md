@@ -33,6 +33,8 @@ Every script must start with:
 - **`instructional`**: prints steps only; does not modify the system. Do **not** add `set -euo pipefail`.
 - **`executable`**: runs commands. Add `set -euo pipefail` immediately after the metadata block.
 
+`@safe` is inferred from command behavior: read-only inspection (`man`, `ps`, `dnf list`, `cut` on `/etc/passwd`, etc.) → `yes`; commands that mutate the system (`useradd`, `mount`, `hostnamectl set-hostname`, …) → `no`. Re-run `scripts/apply_script_headers.py` after bulk edits to refresh metadata.
+
 Naming:
 
 - Standard exercises: `exercise_NN.sh` (presented in the book)

@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 2: Use the ip route show command to display the system's current routing table. 
 # Identify the default gateway and its associated metric.
 #

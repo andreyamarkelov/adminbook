@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 5: Create a directory /tmp/shared_project and a group named devops. 
 # Set the directory's group ownership to devops and apply the SGID bit. 
 # Add your user to the devops group and verify that any new files you create 

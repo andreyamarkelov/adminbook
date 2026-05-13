@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 5: Write a script that lists all executable regular files in the current directory.
 #
 # Task: Find all files in the current directory that are both regular files and executable,

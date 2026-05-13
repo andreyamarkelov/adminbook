@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
+
 # Exercise 9: Write the flatpak command to add the Flathub remote repository only 
 # for the current user, without system-wide privileges, and only if the remote doesn't already exist.
 #

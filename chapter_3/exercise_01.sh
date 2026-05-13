@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 1: Create a script that takes two numbers as command-line arguments and prints their sum.
 #
 # Task: Accept two numeric arguments, validate them, and calculate their sum.

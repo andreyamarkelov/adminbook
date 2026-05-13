@@ -2,6 +2,7 @@
 # @type: instructional
 # @requires: /dev/sdb
 # @safe: yes
+
 # Exercise 1: Use the parted command to create a new GPT partition table on a disk (e.g., /dev/sdb) 
 # and then create a new primary partition using 30% of the available space. 
 # Format this partition with the XFS file system.

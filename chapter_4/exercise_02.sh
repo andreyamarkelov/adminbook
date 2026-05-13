@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 2: Modify the devuser3 account. Change the comment field to "Senior Developer - devuser3",
 # add him to an existing secondary group named sshd, and change their default shell to /usr/sbin/nologin.
 # Ensure that existing secondary groups are preserved.

@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
+
 # Exercise 3: Create a script that creates a directory if it doesn't already exist.
 #
 # Task: Accept a directory name as an argument and create it if it doesn't exist.

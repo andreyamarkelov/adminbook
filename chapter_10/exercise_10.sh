@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
 # @requires: root
-# @safe: no
+# @safe: yes
 set -euo pipefail
+
 # Exercise 10: Edit the /etc/hosts file to add a new entry. 
 # The entry should map the IP address 192.168.122.55 to the hostnames web55.test.local and web55.
 #

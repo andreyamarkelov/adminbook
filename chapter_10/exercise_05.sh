@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
 # @requires: root
-# @safe: no
+# @safe: yes
 set -euo pipefail
+
 # Exercise 5: Add a new, persistent NetworkManager connection named lab-dhcp 
 # for your second (likely disconnected) Ethernet interface. 
 # Ensure it is configured to get an IP address automatically via DHCP and to autoconnect.

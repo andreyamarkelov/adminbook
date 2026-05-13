@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
+
 # Exercise 7: Generate a new key pair. Use a strong passphrase for security. 
 # What are the names of the two files created in your ~/.ssh/ directory?
 #

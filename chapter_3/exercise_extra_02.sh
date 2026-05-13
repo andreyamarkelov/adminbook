@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Extra Exercise 2: Write a script that generates a simple multiplication table
 # for a number provided as an argument. Display the table from 1 to 10.
 # Use a for loop with the seq command.

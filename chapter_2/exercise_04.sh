@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 4: By using a pipe and a find tool, make a command that will display the number 
 # of files in the /etc directory containing "an" in the name.
 #

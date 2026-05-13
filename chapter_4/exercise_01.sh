@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 1: Create a new devusers group. Create new users named devuser1, devuser2, and devuser3,
 # and add them to the devusers group. Add devuser1 to the wheel group.
 #

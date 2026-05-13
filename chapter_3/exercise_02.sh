@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 2: Write a script that checks if a file provided as a command-line argument exists.
 #
 # Task: Accept a filename as an argument and check if it exists as a regular file,

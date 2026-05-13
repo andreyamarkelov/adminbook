@@ -3,6 +3,7 @@
 # @requires: root, /dev/sdb
 # @safe: no
 set -euo pipefail
+
 # Exercise 2: Modify the /etc/fstab file to ensure the new XFS partition mounts automatically 
 # to /mnt/newxfs every time the system boots. Use the partition's UUID for the entry.
 #

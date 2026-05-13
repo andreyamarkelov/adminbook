@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 5: Start a new process with a non-default nice value using the nice command, 
 # and then verify the change with ps.
 #

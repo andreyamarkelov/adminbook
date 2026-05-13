@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 4: Find and enable the SELinux boolean permanently that allows the Apache web server to use NFS.
 #
 # Task: Enable SELinux boolean for Apache NFS access.

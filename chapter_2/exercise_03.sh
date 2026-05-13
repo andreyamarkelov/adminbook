@@ -3,6 +3,7 @@
 # @requires: none
 # @safe: yes
 set -euo pipefail
+
 # Exercise 3: Find in the bash manual page description of aliases and create an alias lls for ls -lah
 #
 # Task: Search the bash man page for ALIASES section and create a persistent alias

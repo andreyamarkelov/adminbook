@@ -12,37 +12,89 @@ STRICT = "set -euo pipefail"
 META_PREFIX = "# @"
 INSTRUCTIONAL_MARKER = 'echo "This script demonstrates'
 
-DESTRUCTIVE_PATTERNS = (
-    re.compile(r"\bsudo\b"),
+# Commands that only inspect the system (matched at the start of the command body).
+READ_ONLY_COMMAND = re.compile(
+    r"(?:"
+    r"man\b|info\b|apropos\b|whatis\b|help\b|"
+    r"cut\b|sort\b|uniq\b|head\b|tail\b|sed\b|awk\b|grep\b|pgrep\b|"
+    r"id\b|getent\b|whoami\b|groups\b|"
+    r"ip\s+(?:addr|a|route|link)\b|"
+    r"ps\b|jobs\b|"
+    r"ls\b|cat\b|wc\b|file\b|stat\b|type\b|which\b|"
+    r"df\b|du\b|"
+    r"getenforce\b|sestatus\b|"
+    r"vimtutor\b|"
+    r"systemctl\s+(?:status|list|is-|show)\b|"
+    r"journalctl\b|"
+    r"dnf\s+(?:list|info|search|repolist|provides)\b|"
+    r"rpm\s+-q[a-z]*\b|"
+    r"nmcli\s+(?:general|device|dev|connection|con)\s+(?:show|status)?\b|"
+    r"nmcli\s+(?:device|dev|connection|con)\b|"
+    r"firewall-cmd\s+--(?:list|get|state)\b|"
+    r"ss\b|"
+    r"atq\b|"
+    r"findmnt\s+--verify\b|"
+    r"blkid\b|"
+    r"timedatectl\s+(?:status|show)\b|"
+    r"hostnamectl\s+status\b|"
+    r"nice\b|"
+    r"sleep\b"
+    r")"
+)
+
+MUTATING_PATTERNS = (
     re.compile(r"\buseradd\b"),
     re.compile(r"\bgroupadd\b"),
     re.compile(r"\busermod\b"),
     re.compile(r"\buserdel\b"),
     re.compile(r"\bgroupdel\b"),
     re.compile(r"\bchpasswd\b"),
-    re.compile(r"\bpasswd\b"),
+    re.compile(r"(?:^|\s)passwd\s+\S"),
     re.compile(r"\bvisudo\b"),
-    re.compile(r"\bfirewall-cmd\b"),
-    re.compile(r"\bnmcli\b"),
-    re.compile(r"\bsystemctl\b"),
-    re.compile(r"\bdnf\b"),
-    re.compile(r"\brpm\b"),
+    re.compile(r"\bfirewall-cmd\b.*--(?:add|remove|new|delete|set|reload)\b"),
+    re.compile(r"\bnmcli\b.*\b(?:add|modify|mod|delete|up|down|import)\b"),
+    re.compile(
+        r"\bsystemctl\s+(?:start|stop|restart|reload|enable|disable|mask|unmask|"
+        r"daemon-reload|set-default|link|reboot|poweroff|halt|suspend)\b"
+    ),
+    re.compile(r"\bdnf\s+(?:install|remove|erase|update|upgrade|reinstall|downgrade|autoremove|swap)\b"),
+    re.compile(r"\brpm\s+(?:-i|-e|-U|--install|--erase|--upgrade|-F|--freshen)\b"),
     re.compile(r"\bsemanage\b"),
     re.compile(r"\bsetsebool\b"),
     re.compile(r"\brestorecon\b"),
     re.compile(r"\bchcon\b"),
-    re.compile(r"tee\s+-a\s+/etc/"),
-    re.compile(r"\bmount\b"),
+    re.compile(r"\btee\b.*(?:/etc/|>>\s*/etc/)"),
+    re.compile(r"(?<!\w)mount\b(?!mnt\s+--verify)"),
     re.compile(r"\bmkfs\."),
+    re.compile(r"\bmkswap\b"),
+    re.compile(r"\bswapon\b"),
+    re.compile(r"\bswapoff\b"),
     re.compile(r"\blvcreate\b"),
     re.compile(r"\bvgcreate\b"),
     re.compile(r"\bpvcreate\b"),
+    re.compile(r"\blvremove\b"),
+    re.compile(r"\bvgremove\b"),
+    re.compile(r"\bpvremove\b"),
+    re.compile(r"\blvextend\b"),
     re.compile(r"\bparted\b"),
     re.compile(r"\bfdisk\b"),
-    re.compile(r"\bcrontab\b"),
-    re.compile(r"\bat\b"),
-    re.compile(r"\bhostnamectl\b"),
+    re.compile(r"\bcrontab\b(?!.*\s-l\b)"),
+    re.compile(r"^\s*at\s+"),
+    re.compile(r"\bhostnamectl\s+set\b"),
     re.compile(r"\btimedatectl\s+set-"),
+    re.compile(r"\bchmod\b"),
+    re.compile(r"\bchown\b"),
+    re.compile(r"\bchattr\b"),
+    re.compile(r"\bmkdir\b"),
+    re.compile(r"\bfallocate\b"),
+    re.compile(r"\bssh-keygen\b"),
+    re.compile(r"\bssh-copy-id\b"),
+    re.compile(r"\bflatpak\s+install\b"),
+    re.compile(r"\bflatpak\s+remote-add\b"),
+    re.compile(r"\bkill\b"),
+    re.compile(r"\brenice\b"),
+    re.compile(r"\bln\s+-s\b"),
+    re.compile(r"\bupdate-crypto-policies\b"),
 )
 
 
@@ -51,14 +103,55 @@ def executable_lines(content: str) -> list[str]:
     for line in content.splitlines():
         stripped = line.strip()
         if stripped and not stripped.startswith("#"):
-            lines.append(line)
+            lines.append(stripped)
     return lines
 
 
+def command_body(line: str) -> str:
+    """Return the command after sudo and trailing background operators."""
+    body = re.sub(r"\s*&\s*$", "", line.strip())
+    body = re.sub(r"^(?:sudo\s+)+", "", body)
+    return body.strip()
+
+
+def line_is_read_only(line: str) -> bool:
+    if not line.strip():
+        return True
+    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", line):
+        return True
+    body = command_body(line)
+    if body.startswith(("echo ", "printf ")):
+        return True
+    return bool(READ_ONLY_COMMAND.match(body))
+
+
+def line_is_mutating(line: str) -> bool:
+    if not line.strip() or line_is_read_only(line):
+        return False
+    if any(pattern.search(line) for pattern in MUTATING_PATTERNS):
+        return True
+    if re.search(r"\bsudo\b", line):
+        # Unknown privileged command; treat as mutating unless read-only.
+        return not line_is_read_only(line)
+    return False
+
+
+def line_needs_root(line: str) -> bool:
+    if not line.strip():
+        return False
+    if re.search(r"\bsudo\b", line):
+        return True
+    if line_is_read_only(line):
+        return False
+    return line_is_mutating(line)
+
+
+def is_mutating(content: str) -> bool:
+    return any(line_is_mutating(line) for line in executable_lines(content))
+
+
 def needs_root(content: str) -> bool:
-    return any(
-        pattern.search(line) for line in executable_lines(content) for pattern in DESTRUCTIVE_PATTERNS
-    )
+    return any(line_needs_root(line) for line in executable_lines(content))
 
 
 def infer_metadata(rel_path: str, content: str) -> tuple[str, str, str]:
@@ -75,15 +168,10 @@ def infer_metadata(rel_path: str, content: str) -> tuple[str, str, str]:
         if "/dev/sdb" in content:
             requires.append("/dev/sdb")
 
-    # Chapters 2–3 logic scripts are safe to run without system changes.
-    if instructional:
+    if instructional or not is_mutating(content):
         safe = "yes"
-    elif rel_path.startswith(("chapter_2/", "chapter_3/")) and not needs_root(content):
-        safe = "yes"
-    elif needs_root(content):
-        safe = "no"
     else:
-        safe = "yes"
+        safe = "no"
 
     requires_value = ", ".join(dict.fromkeys(requires)) if requires else "none"
     return script_type, requires_value, safe

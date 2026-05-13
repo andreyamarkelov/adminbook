@@ -3,6 +3,7 @@
 # @requires: root
 # @safe: no
 set -euo pipefail
+
 # Exercise 14: Permanently add TCP port 8080 to the public zone. 
 # Reload the firewall and verify that the port is now active in the runtime configuration.
 #

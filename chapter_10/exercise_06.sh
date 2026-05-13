@@ -1,8 +1,9 @@
 #!/bin/bash
 # @type: executable
 # @requires: root
-# @safe: no
+# @safe: yes
 set -euo pipefail
+
 # Exercise 6: Create a new, persistent connection named static1 for your primary interface. 
 # Configure it with the following manual settings:
 # IP Address: 192.168.122.55/24
