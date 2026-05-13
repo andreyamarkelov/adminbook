@@ -21,6 +21,7 @@ READ_ONLY_COMMAND = re.compile(
     r"ip\s+(?:addr|a|route|link)\b|"
     r"ps\b|jobs\b|"
     r"ls\b|cat\b|wc\b|file\b|stat\b|type\b|which\b|"
+    r"lsblk\b|blkid\b|"
     r"df\b|du\b|"
     r"getenforce\b|sestatus\b|"
     r"vimtutor\b|"
@@ -79,7 +80,6 @@ MUTATING_PATTERNS = (
     re.compile(r"\bparted\b"),
     re.compile(r"\bfdisk\b"),
     re.compile(r"\bcrontab\b.*\s-u\s"),
-    re.compile(r"^\s*at\s+"),
     re.compile(r"\bhostnamectl\s+set\b"),
     re.compile(r"\btimedatectl\s+set-"),
     re.compile(r"\bflatpak\s+install\b"),
@@ -99,6 +99,7 @@ USER_SPACE_MUTATING_PATTERNS = (
     re.compile(r"\bfallocate\b"),
     re.compile(r"\bssh-copy-id\b"),
     re.compile(r"\bcrontab\b(?!.*\s-l\b)"),
+    re.compile(r"^\s*at\s+"),
 )
 
 USER_SCOPE_RE = re.compile(r"(?:flatpak\b[^\n]*\s--user\b|ssh-copy-id\b)")
@@ -130,13 +131,20 @@ def command_body(line: str) -> str:
 
 
 def line_is_read_only(line: str) -> bool:
-    if not line.strip():
+    stripped = line.strip()
+    if not stripped:
         return True
-    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", line):
+    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", stripped):
         return True
-    body = command_body(line)
-    if body.startswith(("echo ", "printf ")):
+    if any(pattern.search(stripped) for pattern in MUTATING_PATTERNS):
+        return False
+    if any(pattern.search(stripped) for pattern in USER_SPACE_MUTATING_PATTERNS):
+        return False
+    body = command_body(stripped)
+    if body.startswith(("echo ", "printf ")) and "|" not in stripped:
         return True
+    if re.search(r"\bsudo\b", stripped):
+        return bool(READ_ONLY_COMMAND.match(body))
     return bool(READ_ONLY_COMMAND.match(body))
 
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
 
 # Exercise 9: Which two lines would you modify in the main OpenSSH server configuration file 

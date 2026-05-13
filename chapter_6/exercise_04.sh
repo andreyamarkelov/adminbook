@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: root
-# @safe: no
+# @requires: none
+# @safe: yes
 set -euo pipefail
 
 # Exercise 4: Use the lsblk --fs or blkid commands to list all file systems 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: root
-# @safe: no
+# @requires: none
+# @safe: yes
 set -euo pipefail
 
 # Exercise 3: Schedule a command using at to execute 5 minutes from now. 

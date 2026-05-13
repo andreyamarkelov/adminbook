@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
 
 # Exercise 8: Add a second IP address, 10.10.10.55/24, to your active static1 connection. 

@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
 
 # Exercise 6: Create a new, persistent connection named static1 for your primary interface. 

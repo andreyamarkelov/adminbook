@@ -1,7 +1,7 @@
 #!/bin/bash
 # @type: executable
-# @requires: none
-# @safe: yes
+# @requires: root
+# @safe: no
 set -euo pipefail
 
 # Exercise 12: Modify the same connection profile to set ipv4.ignore-auto-dns to yes. 
